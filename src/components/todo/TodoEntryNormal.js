@@ -12,48 +12,29 @@ import { ADD_NOTE_API, NOTES_API } from "../../constants/endPoints";
 import NavBarUser from "../../navbar/NavbarUser";
 
 const TodoEntryNormal = () => {
-  // const userInfo = sessionStorage.getItem("userInfo");
-  // const parsedUserInfo = JSON.parse(userInfo);
-
-  // const { userId, userName } = parsedUserInfo;
-
-  const [todoEntry, setTodoEntry] = useState({
-    todoNote: "",
-  });
   const [updatingNote, setUpdatingNote] = useState("");
   const [noteId, setNoteId] = useState("");
   const [noteDescription, setNoteDescription] = useState("");
   const [flag, setFlag] = useState(false);
   const [loading, setLoading] = useState(false);
   const [updateTextbox, setUpdateTextbox] = useState(false);
-//   const dispatch = useDispatch();
-//   const allNotes = useSelector((state) => state.loadAllNotes);
-//   const error = useSelector((state) => state.error);
-const [allNotes,setAllNotes]=useState([]);
+  const [allNotes, setAllNotes] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     getData();
-    console.log(allNotes)
   }, []);
 
   const handleInfo = (e) => {
-    const { name, value } = e.target;
-    setTodoEntry({
-      ...todoEntry,
-      [name]: value,
-    });
+    setNoteDescription(e.target.value);
   };
-  const { todoNote } = todoEntry;
-  console.log(todoEntry);
   const getData = async () => {
     setLoading(true);
     let res = await axios
-      // .get(`http://localhost:3001/notes`)
       .get(`${NOTES_API}`)
       .then((res) => {
         console.log("ff", res);
-        // dispatch(getNotes(res.data));
-        setAllNotes(res.data)
+        setAllNotes(res.data);
 
         setLoading(false);
       })
@@ -63,13 +44,30 @@ const [allNotes,setAllNotes]=useState([]);
       });
   };
 
-  //   const validateField = () => {
-  //     todoNote === "" ? dispatch(showError(true)) : submitData();
-  //   };
+  const validateField = () => {
+    noteDescription === "" ? setError(true) : submitData();
+  };
   const resetData = () => {
-    todoEntry.todoNote = "";
-    // dispatch(showError(false));
-    setUpdatingNote("");
+    setNoteDescription("");
+  };
+
+  let data = {
+    todo_Id: "",
+    todoNote: noteDescription,
+  };
+
+  let submitDataForm = JSON.stringify(data);
+
+  const submitData = () => {
+    axios
+      .post(`${ADD_NOTE_API}`, submitDataForm)
+      .then((res) => {
+        console.log(res);
+        getData()
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   //   const handleUpdatingNote = (e) => {
@@ -94,15 +92,15 @@ const [allNotes,setAllNotes]=useState([]);
                       className="form-control"
                       placeholder="Enter Note"
                       name="todoNote"
-                      value={todoNote}
+                      value={noteDescription}
                       onChange={handleInfo}
                     />
                   </div>
-                  {/* {error && <p style={{ color: "red" }}>Enter the note</p>} */}
+                  {error && <p style={{ color: "red" }}>Enter the note</p>}
                   <button
                     type="button"
                     className="btn btn-primary"
-                    // onClick={validateField}
+                    onClick={validateField}
                   >
                     Add Todo
                   </button>
@@ -110,33 +108,6 @@ const [allNotes,setAllNotes]=useState([]);
                 </div>
               </div>
             </div>
-            {updateTextbox && (
-              <div className="col-md-6">
-                <div className="panel panel-success">
-                  <div class="panel-heading" style={{ fontSize: "20px" }}>
-                    Update Todo with ID : {noteId}
-                  </div>
-                  <div class="panel-body">
-                    <div>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="selectedData"
-                        value={updatingNote}
-                        // onChange={handleUpdatingNote}
-                      />
-                      <br />
-                      <input
-                        type="button"
-                        className="btn btn-primary"
-                        value="Update Todo"
-                        // onClick={updateNote}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
           <br />
           <br />
@@ -198,12 +169,6 @@ const [allNotes,setAllNotes]=useState([]);
           </div>
         </div>
       </div>
-      {/* {flag && (
-        <TodoUpdateRedux
-          todoNoteId={noteId}
-          todoDescription={noteDescription}
-        />
-      )} */}
     </div>
   );
 };
