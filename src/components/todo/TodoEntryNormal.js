@@ -129,7 +129,7 @@ const TodoEntryNormal = () => {
               </div>
               <div class="panel-body">
                 <div className="row">
-                  {allNotes.length === 0 && (
+                  {/* {allNotes.length === 0 && (
                     <p
                       style={{
                         color: "red",
@@ -139,7 +139,7 @@ const TodoEntryNormal = () => {
                     >
                       You have not added any Todos yet..!
                     </p>
-                  )}
+                  )} */}
                   {allNotes.map((note, index) => (
                     <div className="col-md-3">
                       <div className="card" style={{ width: "200px" }}>
