@@ -178,7 +178,6 @@ const TodoEntryNormal = () => {
           </div>
         </div>
       </div>
-      {loading ? <Loader /> : <></>}
     </div>
   );
 };
