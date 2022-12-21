@@ -35,7 +35,7 @@ const TodoEntryNormal = () => {
       .then((res) => {
         console.log("ff", res);
         setAllNotes(res.data);
-
+        resetData();
         setLoading(false);
       })
       .catch((err) => {
@@ -45,8 +45,16 @@ const TodoEntryNormal = () => {
   };
 
   const validateField = () => {
-    noteDescription === "" ? setError(true) : submitData();
+    if (noteDescription === "") {
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 2000);
+    } else {
+      submitData();
+    }
   };
+
   const resetData = () => {
     setNoteDescription("");
   };
@@ -63,7 +71,7 @@ const TodoEntryNormal = () => {
       .post(`${ADD_NOTE_API}`, submitDataForm)
       .then((res) => {
         console.log(res);
-        getData()
+        getData();
       })
       .catch((err) => {
         console.log(err);
