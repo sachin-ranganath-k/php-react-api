@@ -137,7 +137,6 @@ const TodoEntryNormal = () => {
                         textAlign: "center",
                       }}
                     >
-                      {loading ? <Loader /> : <></>}
                       You have not added any Todos yet..!
                     </p>
                   )}
