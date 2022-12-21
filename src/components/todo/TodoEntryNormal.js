@@ -67,10 +67,11 @@ const TodoEntryNormal = () => {
   let submitDataForm = JSON.stringify(data);
 
   const submitData = () => {
+    setLoading(true);
     axios
       .post(`${ADD_NOTE_API}`, submitDataForm)
       .then((res) => {
-        console.log(res);
+        setLoading(false);
         getData();
       })
       .catch((err) => {
