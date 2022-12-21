@@ -140,6 +140,7 @@ const TodoEntryNormal = () => {
                       You have not added any Todos yet..!
                     </p>
                   )} */}
+                  {loading ? <Loader /> : <></>}
                   {allNotes.map((note, index) => (
                     <div className="col-md-3">
                       <div className="card" style={{ width: "200px" }}>
