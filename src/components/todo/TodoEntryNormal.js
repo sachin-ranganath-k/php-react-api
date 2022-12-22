@@ -30,13 +30,11 @@ const TodoEntryNormal = () => {
     let res = await axios
       .get(`${NOTES_API}`)
       .then((res) => {
-        console.log("ff", res);
         setAllNotes(res.data);
         resetData();
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         setLoading(false);
       });
   };
@@ -85,7 +83,6 @@ const TodoEntryNormal = () => {
         getData();
       })
       .catch((err) => {
-        console.log(err);
         setLoading(false);
         getData();
       });
