@@ -79,7 +79,7 @@ const TodoEntryNormal = () => {
   const deleteNote = (todo_Id) => {
     setLoading(true);
     axios
-      .get(`${DELETE_NOTE_API}?id=${todo_Id}`)
+      .post(`${DELETE_NOTE_API},${todo_Id}`)
       .then((res) => {
         setLoading(false);
         getData();
