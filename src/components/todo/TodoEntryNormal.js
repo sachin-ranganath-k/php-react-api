@@ -149,7 +149,7 @@ const TodoEntryNormal = () => {
                         <div className="card" style={{ width: "200px" }}>
                           <div className="card-body">
                             <h4 className="card-title">
-                              <strong>#{index + 1}</strong>
+                              <strong>#{index + 1}  </strong>
                             </h4>
                             <br />
                             <p>{note.todoNote}</p>
