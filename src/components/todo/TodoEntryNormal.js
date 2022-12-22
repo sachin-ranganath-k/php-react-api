@@ -79,7 +79,7 @@ const TodoEntryNormal = () => {
   const deleteNote = (todo_Id) => {
     setLoading(true);
     axios
-      .delete(`${DELETE_NOTE_API}?todoId=${todo_Id}`)
+      .delete(`${DELETE_NOTE_API}?id=${todo_Id}`)
       .then((res) => {
         setLoading(false);
         getData();
@@ -156,7 +156,7 @@ const TodoEntryNormal = () => {
                             <button
                               type="button"
                               className="btn btn-danger"
-                              onClick={() => deleteNote(note.todo_Id)}
+                              onClick={() => deleteNote(note.id)}
                             >
                               <span class="glyphicon glyphicon-trash"></span>
                             </button>
