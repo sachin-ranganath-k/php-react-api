@@ -5,6 +5,7 @@ import {
   ADD_NOTE_API,
   DELETE_NOTE_API,
   NOTES_API,
+  UPDATE_NOTE_API,
 } from "../../constants/endPoints";
 import NavBarUser from "../../navbar/NavbarUser";
 
@@ -12,7 +13,6 @@ const TodoEntryNormal = () => {
   const [updatingNote, setUpdatingNote] = useState("");
   const [noteId, setNoteId] = useState("");
   const [noteDescription, setNoteDescription] = useState("");
-  const [flag, setFlag] = useState(false);
   const [loading, setLoading] = useState(false);
   const [updateTextbox, setUpdateTextbox] = useState(false);
   const [allNotes, setAllNotes] = useState([]);
@@ -77,7 +77,7 @@ const TodoEntryNormal = () => {
   const deleteNote = (todo_Id) => {
     setLoading(true);
     axios
-     .get(`${DELETE_NOTE_API}?id=${todo_Id}`)
+      .get(`${DELETE_NOTE_API}?todo_Id=${todo_Id}`)
       .then((res) => {
         setLoading(false);
         getData();
@@ -88,9 +88,37 @@ const TodoEntryNormal = () => {
       });
   };
 
-  //   const handleUpdatingNote = (e) => {
-  //     setUpdatingNote(e.target.value);
-  //   };
+  const handleUpdatingNote = (e) => {
+    setUpdatingNote(e.target.value);
+  };
+
+  const setData = (noteId, noteDescription) => {
+    setNoteId(noteId);
+    setUpdatingNote(noteDescription);
+    setUpdateTextbox(true);
+  };
+
+  let submitUpdateData = {
+    todoNote: updatingNote,
+  };
+
+  console.log("upddd", updatingNote);
+
+  let parseSubmitUpdateData = JSON.stringify(submitUpdateData);
+
+  const updateNote = () => {
+    axios
+      .post(`${UPDATE_NOTE_API}?todo_Id=${noteId}`, parseSubmitUpdateData)
+      .then((res) => {
+        console.log(res);
+        getData();
+        resetData();
+        setUpdateTextbox(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div>
@@ -126,6 +154,33 @@ const TodoEntryNormal = () => {
                 </div>
               </div>
             </div>
+            {updateTextbox && (
+              <div className="col-md-6">
+                <div className="panel panel-success">
+                  <div class="panel-heading" style={{ fontSize: "20px" }}>
+                    Update Todo with ID : {noteId}
+                  </div>
+                  <div class="panel-body">
+                    <div>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="selectedData"
+                        value={updatingNote}
+                        onChange={handleUpdatingNote}
+                      />
+                      <br />
+                      <input
+                        type="button"
+                        className="btn btn-primary"
+                        value="Update Todo"
+                        onClick={updateNote}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <br />
           <br />
@@ -138,7 +193,8 @@ const TodoEntryNormal = () => {
               </div>
               <div class="panel-body">
                 <div className="row">
-                  {allNotes.length === 0 && "You have not added any Todos yet..!"}
+                  {allNotes.length === 0 &&
+                    "You have not added any Todos yet..!"}
                   {loading ? <Loader /> : <></>}
                   {allNotes.length > 0 &&
                     allNotes.map((note, index) => (
@@ -146,27 +202,27 @@ const TodoEntryNormal = () => {
                         <div className="card" style={{ width: "200px" }}>
                           <div className="card-body">
                             <h4 className="card-title">
-                              <strong>#{index + 1}  </strong>
+                              <strong>#{index + 1} </strong>
                             </h4>
                             <br />
                             <p>{note.todoNote}</p>
                             <button
                               type="button"
                               className="btn btn-danger"
-                              onClick={() => deleteNote(note.id)}
+                              onClick={() => deleteNote(note.todo_Id)}
                             >
                               <span class="glyphicon glyphicon-trash"></span>
                             </button>
                             &nbsp;&nbsp;&nbsp;
-                            {/* <button
-                            type="button"
-                            className="btn btn-primary"
-                            //   onClick={() => updateNote(note.id)}
-                            //   onClick={() => navigate(`updateNote/${note.id}`)}
-                            onClick={() => setData(note.id, note.todoNote)}
-                          >
-                            <span class="glyphicon glyphicon-pencil"></span>
-                          </button> */}
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={() =>
+                                setData(note.todo_Id, note.todoNote)
+                              }
+                            >
+                              <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
                           </div>
                         </div>
                       </div>
