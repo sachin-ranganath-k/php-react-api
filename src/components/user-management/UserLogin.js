@@ -49,6 +49,7 @@ const UserLogin = () => {
     for (let i = 0; i < userInfo.length + 1; i++) {
       if (userInfo[i]?.email === userEmail && userInfo[i]?.password === password) {
         sessionStorage.setItem("userData", userInfo[i].user_id);
+        sessionStorage.setItem("userName", userInfo[i].userName)
         found = 1;
       }
     }

@@ -22,7 +22,8 @@ const TodoEntryNormal = () => {
     getData();
   }, []);
 
-  const userId=sessionStorage.getItem('userData')
+  const userId = sessionStorage.getItem("userData");
+  const userName = sessionStorage.getItem("userName");
 
   const handleInfo = (e) => {
     setNoteDescription(e.target.value);
@@ -59,7 +60,7 @@ const TodoEntryNormal = () => {
   let data = {
     todo_Id: "",
     todoNote: noteDescription,
-    addedBy:userId
+    addedBy: userId,
   };
 
   let submitDataForm = JSON.stringify(data);
@@ -123,10 +124,10 @@ const TodoEntryNormal = () => {
 
   return (
     <div>
-       <nav className="navbar navbar-inverse">
+      <nav className="navbar navbar-inverse">
         <div className="navbar-header">
           <Link className="navbar-brand" to="/userHome">
-            Hi
+            Hi {userName}
             {/* Hi {parsedUserInfo.userName} */}
           </Link>
         </div>
