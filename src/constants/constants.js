@@ -13,5 +13,5 @@ export const formErrorMsgs = {
 export const registerLoginForm = {
   registerSuccess: "Registered Successfully..! You can login now",
   registerFailure: "Something went wrong..! Please try agaim later",
-  loginFailure: "Invalid Credentials",
+  loginFailure: "Invalid Credentials or You have not yet registered..!",
 };
