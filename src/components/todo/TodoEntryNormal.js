@@ -131,11 +131,11 @@ const TodoEntryNormal = () => {
             {/* Hi {parsedUserInfo.userName} */}
           </Link>
         </div>
-        <div className="navbar-header">
+        {/* <div className="navbar-header">
           <Link className="navbar-brand" to="/myProfile">
             My Profile
           </Link>
-        </div>
+        </div> */}
         <div className="navbar-header">
           <Link className="navbar-brand" to="/logout">
             Logout..!
