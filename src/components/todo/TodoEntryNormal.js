@@ -7,7 +7,7 @@ import {
   NOTES_API,
   UPDATE_NOTE_API,
 } from "../../constants/endPoints";
-import NavBarUser from "../../navbar/NavbarUser";
+import { Link } from "react-router-dom";
 
 const TodoEntryNormal = () => {
   const [updatingNote, setUpdatingNote] = useState("");
@@ -22,13 +22,15 @@ const TodoEntryNormal = () => {
     getData();
   }, []);
 
+  const userId=sessionStorage.getItem('userData')
+
   const handleInfo = (e) => {
     setNoteDescription(e.target.value);
   };
   const getData = async () => {
     setLoading(true);
     let res = await axios
-      .get(`${NOTES_API}`)
+      .get(`${NOTES_API}?user_Id=${userId}`)
       .then((res) => {
         setAllNotes(res.data);
         resetData();
@@ -57,6 +59,7 @@ const TodoEntryNormal = () => {
   let data = {
     todo_Id: "",
     todoNote: noteDescription,
+    addedBy:userId
   };
 
   let submitDataForm = JSON.stringify(data);
@@ -120,7 +123,24 @@ const TodoEntryNormal = () => {
 
   return (
     <div>
-      <NavBarUser />
+       <nav className="navbar navbar-inverse">
+        <div className="navbar-header">
+          <Link className="navbar-brand" to="/userHome">
+            Hi
+            {/* Hi {parsedUserInfo.userName} */}
+          </Link>
+        </div>
+        <div className="navbar-header">
+          <Link className="navbar-brand" to="/myProfile">
+            My Profile
+          </Link>
+        </div>
+        <div className="navbar-header">
+          <Link className="navbar-brand" to="/logout">
+            Logout..!
+          </Link>
+        </div>
+      </nav>
       <div className="container" style={{ margin: "5%" }}>
         <div className="col-md-12">
           <div className="row">

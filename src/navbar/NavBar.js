@@ -9,19 +9,17 @@ const NavBar = () => {
           <a className="navbar-brand" href="#">
             Todo
           </a>
-        </div>\
-        <div className="navbar-header">
-        <Link className="navbar-brand" to="/">
-            Register
-          </Link>
         </div>
         <div className="navbar-header">
-          <Link className="navbar-brand" to="/login">
+          <Link className="navbar-brand" to="/">
             Login
           </Link>
         </div>
-        
-
+        <div className="navbar-header">
+          <Link className="navbar-brand" to="/register">
+            Register
+          </Link>
+        </div>
         {/* <ul className="nav navbar-nav navbar-right">
           <li>
             <a href="#">

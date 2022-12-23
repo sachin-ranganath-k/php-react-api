@@ -1,17 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 
 const TodoView = (props) => {
+  
+  const [userInfo, setUserInfo] = useState([]);
 
-  const dispatch=useDispatch()
+  useEffect(() => {
+    getData();
+  }, []);
 
-  const deleteNote = (id) => {
+  const getData = () => {
+    axios
+      .get(`http://localhost:3001/notes`)
+      .then((res) => {
+        console.log(res);
+        setUserInfo(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteUser = (id) => {
     axios
       .delete(`http://localhost:3001/notes/${id}`)
       .then((res) => {
-        console.log(res)
-      //  dispatch(deleteNote(res.data.id))
+        getData();
       })
       .catch((err) => {
         console.log(err);
@@ -22,16 +36,16 @@ const TodoView = (props) => {
     <div className="container">
       <div className="col-md-12">
         <div className="row">
-          {props.allNotes.map((note, index) => (
+          {userInfo.map((user) => (
             <div className="col-md-4">
-              <div className="card" style={{ width: "200px" }} >
+              <div className="card" style={{ width: "400px" }}>
                 <div className="card-body">
-                  <h4 className="card-title">Note : {index + 1}</h4>
-                  <p>{note.todoNote}</p>
+                  <h4 className="card-title">{user.userName}</h4>
+                  <p>{user.userEmail}</p>
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={() => deleteNote(note.id)}
+                    onClick={() => deleteUser(user.id)}
                   >
                     Delete
                   </button>
