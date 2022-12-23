@@ -102,8 +102,6 @@ const TodoEntryNormal = () => {
     todoNote: updatingNote,
   };
 
-  console.log("upddd", updatingNote);
-
   let parseSubmitUpdateData = JSON.stringify(submitUpdateData);
 
   const updateNote = () => {
@@ -193,8 +191,8 @@ const TodoEntryNormal = () => {
               </div>
               <div class="panel-body">
                 <div className="row">
-                  {allNotes.length === 0 &&
-                    "You have not added any Todos yet..!"}
+                  {/* {notesLength > 0 &&
+                    "You have not added any Todos yet..!"} */}
                   {loading ? <Loader /> : <></>}
                   {allNotes.length > 0 &&
                     allNotes.map((note, index) => (
